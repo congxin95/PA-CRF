@@ -40,7 +40,7 @@ All hyper-parameters are listed in `config.py` file. You can change it to conduc
 2. Evaluation
 
 ```shell
-python main.py --model=pa_crf --trainN=5 --evalN=5 --K=5 --Q=1 --load_ckpt="./path/to/your/saved/model" --test
+python main.py --model=pa_crf --trainN=5 --evalN=5 --K=5 --Q=1 --load_ckpt="your_checkpoint_name_saved_in_checkpoint_dir" --test
 ```
 
 Citation

@@ -6,10 +6,10 @@ from torch import nn
 import torch.nn.functional as F
 from transformers import BertModel
 
-from .proto import Proto
+from .proto_dot import ProtoDot
 from .fscrf import FewShotCRF
 
-class PACRF(Proto):
+class PACRF(ProtoDot):
     def __init__(self, N, sample_num, *args, **kwargs):
         super(PACRF, self).__init__(*args, **kwargs)
         self.crf = FewShotCRF(2*N + 1, batch_first=True)
