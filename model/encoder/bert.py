@@ -19,47 +19,6 @@ class BertEncoder(nn.Module):
         return output
     
     def tokenize(self, instance, label2id):
-        max_length = self.max_length - 2
-        
-        token = instance['tokens']
-        label = instance['trigger_label']
-        B_mask = instance['B-mask']
-        I_mask = instance['I-mask']
-        att_mask = [1] * len(token)
-        
-        if len(token) < max_length:
-            token += ['[PAD]'] * (max_length - len(token))
-            label += ['O'] * (max_length - len(label))
-            B_mask += [0] * (max_length - len(B_mask))
-            I_mask += [0] * (max_length - len(I_mask))
-            att_mask += [0] * (max_length - len(att_mask))
-        else:
-            token = token[:max_length]
-            label = label[:max_length]
-            B_mask = B_mask[:max_length]
-            I_mask = I_mask[:max_length]
-            att_mask = att_mask[:max_length]
-        
-        tokens = ['[CLS]'] + token + ['[SEP]']
-        labels = ['O'] + label + ['O']
-        B_mask = [0] + B_mask + [0]
-        I_mask = [0] + I_mask + [0]
-        att_mask = [1] + att_mask + [0]
-        
-        token_ids = self.tokenizer.convert_tokens_to_ids(tokens)
-        token_ids = torch.tensor(token_ids).long()
-        
-        label_ids = list(map(lambda x: label2id[x], labels))
-        label_ids = torch.tensor(label_ids).long()
-        
-        B_mask_ids = torch.tensor(B_mask)
-        I_mask_ids = torch.tensor(I_mask)
-        
-        att_mask_ids = torch.tensor(att_mask)
-        
-        return token_ids, label_ids, B_mask_ids, I_mask_ids, att_mask_ids
-    
-    def tokenize_en(self, instance, label2id):
         max_length = self.max_length
         
         raw_tokens = instance['tokens']
